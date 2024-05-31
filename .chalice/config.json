@@ -1,0 +1,31 @@
+{
+  "version": "2.0",
+  "app_name": "koandina-chalice-lab",
+  "environment_variables": {
+    "BUCKET_NAME": "${var.bucket_name}",
+    "TOPIC_BUS_NAME": "${var.topic_bus_name}",
+    "TABLE_NAME": "${var.table_name}",
+    "TOPIC_BUS_ARN": "${aws_sns_topic.topic_bus.arn}",
+    "TOPIC_EMAIL_ARN": "${aws_sns_topic.topic_email.arn}"
+  },
+  "stages": {
+    "local": {
+      "api_gateway_stage": "local",
+      "autogen_policy": false,
+      "iam_policy_file": "policy-dev.json",
+      "environment_variables": {
+        "MOCK": "1",
+        "BUCKET_NAME": "test",
+        "TOPIC_BUS_NAME": "test",
+        "TABLE_NAME": "test",
+        "TOPIC_BUS_ARN": "arn:aws:sns:us-east-1:000000000000:test",
+        "TOPIC_EMAIL_ARN": "arn:aws:sns:us-east-1:000000000000:test"
+      }
+    },
+    "dev": {
+      "api_gateway_stage": "dev",
+      "autogen_policy": false,
+      "iam_policy_file": "../terraform/policies/policy-dev.json"
+    }
+  }
+}
