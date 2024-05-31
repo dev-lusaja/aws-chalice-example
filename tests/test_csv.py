@@ -31,5 +31,4 @@ def test_csv():
             response = client.lambda_.invoke(
                 'csv', event
             )
-            assert response.payload.status_code == 200
-            assert json.loads(response.payload.body) == {'response': 'csv created'}
+            assert response.payload == {'response': 'csv created'}

@@ -1,4 +1,3 @@
-import json
 from chalice.test import Client
 from app import app
 
@@ -29,5 +28,4 @@ def test_notify():
             response = client.lambda_.invoke(
                 'notify', event
             )
-            assert response.payload.status_code == 200
-            assert json.loads(response.payload.body) == {'response': 'email sended'}
+            assert response.payload == {'response': 'email sended'}

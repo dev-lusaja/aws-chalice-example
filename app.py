@@ -31,26 +31,18 @@ def post_order():
         raise BadRequestError(e)
 
 
-@app.on_sns_message(topic=os.getenv('TOPIC_BUS_NAME', default='TEST'))
+@app.on_sns_message(topic=os.getenv('TOPIC_BUS_NAME'))
 def notify(event):
     try:
-        response = service.send_email(event.message)
-        return Response(body=json.dumps(response),
-                        status_code=200,
-                        headers={'Content-Type': 'application/json'}
-                        )
+        return service.send_email(event.message)
     except Exception as e:
         print(traceback.format_exc())
         raise BadRequestError(e)    
 
-@app.on_sns_message(topic=os.getenv('TOPIC_BUS_NAME', default='TEST'))
+@app.on_sns_message(topic=os.getenv('TOPIC_BUS_NAME'))
 def csv(event):
     try:
-        response = service.upload_csv(event.message)
-        return Response(body=json.dumps(response),
-                        status_code=200,
-                        headers={'Content-Type': 'application/json'}
-                        )
+        return service.upload_csv(event.message)
     except Exception as e:
         print(traceback.format_exc())
         raise BadRequestError(e)
